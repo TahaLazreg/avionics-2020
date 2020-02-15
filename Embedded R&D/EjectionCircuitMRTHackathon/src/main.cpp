@@ -4,19 +4,15 @@
 
 I2C i2c(I2C_SDA, I2C_SCL);
 BMP180 bmp180(&i2c);
-DigitalOut myled(PB_4);
+DigitalOut myRelay(PB_4);
+DigitalOut myLed(PB_5);
 
 int main(void) {
-
+  myLed = 1;
     while(1) {
         if (bmp180.init() != 0) {
             printf("Error communicating with BMP180\n");
-            for(int i =0; i<10; i++){
-              myled = 1;
-              wait_ms(50);
-              myled = 0;
-              wait_ms(50);
-            }
+            
         } else {
             printf("Initialized BMP180\n");
             break;
@@ -47,16 +43,16 @@ int main(void) {
         int prevP = pressure;
         for (int i=0; i<30; i++){
             bmp180.getPressure(&pressure);
-            if(pressure-prevP > 1){
+            if(pressure-prevP < 1){
                 i = 0;
             }
             prevP = pressure;
             wait_ms(500);
         }
          while(1) {
-        myled = 1;
-        wait(1);
-        myled = 0;
-        wait(1);
+        myRelay = 1;
+        wait(5);
+        myRelay = 0;
+        wait(5);
     }
 }
