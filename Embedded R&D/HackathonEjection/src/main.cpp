@@ -46,11 +46,11 @@ int main(void) {
         int prevP = pressure;
        for (int i=0; i<20 ; i++){
             bmp180.getPressure(&pressure);
-            if(pressure-prevP > 50){
+            if(pressure-prevP >= 500){
                 i = 0;
             }
             prevP = pressure;
-            wait_ms(500);
+            wait_ms(50);
         }
          while(1) {
         myRelay = 1;
