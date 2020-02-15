@@ -12,7 +12,10 @@ int main(void) {
     while(1) {
         if (bmp180.init() != 0) {
             printf("Error communicating with BMP180\n");
-            
+            myRelay = 1;
+        wait(1);
+        myRelay = 0;
+        wait(1);
         } else {
             printf("Initialized BMP180\n");
             break;
@@ -41,16 +44,14 @@ int main(void) {
         printf("Pressure = %d Pa Temperature = %f C\n", pressure, temp);
 
         int prevP = pressure;
-
-       for (int i=0; i<30; i++){
+       /*for (int i=0; i<30; i++){
             bmp180.getPressure(&pressure);
-            if(pressure-prevP > 1){
-              i = 0;
+            if(pressure-prevP < 1){
+                i = 0;
             }
             prevP = pressure;
-            
-        }
-        
+            wait_ms(500);
+        }*/
          while(1) {
         myRelay = 1;
         wait(5);
