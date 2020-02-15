@@ -41,14 +41,16 @@ int main(void) {
         printf("Pressure = %d Pa Temperature = %f C\n", pressure, temp);
 
         int prevP = pressure;
+
        for (int i=0; i<30; i++){
             bmp180.getPressure(&pressure);
-            if(pressure-prevP < 1){
-                i = 0;
+            if(pressure-prevP > 1){
+              i = 0;
             }
             prevP = pressure;
-            wait_ms(500);
+            
         }
+        
          while(1) {
         myRelay = 1;
         wait(5);
